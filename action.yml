@@ -7,11 +7,14 @@ branding:
 outputs:
   has-changesets:
     description: 'Whether there are any changesets'
+    value: ${{ steps.detect.outputs.has-changesets }}
   changesets:
     description: 'A list of changesets'
+    value: ${{ steps.detect.outputs.changesets }}
 runs:
   using: 'composite'
   steps:
     - name: Detect changesets
+      id: detect
       shell: bash
       run: ${{ github.action_path }}/index.sh
