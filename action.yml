@@ -1,0 +1,17 @@
+name: 'Detect Changesets'
+description: 'Detect changesets files in the .changeset directory'
+author: Bjorn Lu
+branding:
+  icon: eye
+  color: blue
+outputs:
+  has-changesets:
+    description: 'Whether there is any changesets'
+  changesets:
+    description: 'A list of changesets'
+runs:
+  using: 'composite'
+  steps:
+    - name: Detect changesets
+      shell: bash
+      run: index.sh

@@ -1,0 +1,62 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Test 1
+      - id: test-1
+        uses: ./
+      - run: |
+          echo "${{ steps.test-1.outputs.has-changesets }}"
+          echo "${{ steps.test-1.outputs.changesets }}"
+      - if: steps.test-1.outputs.has-changesets != 'false'
+        run: exit 1
+
+      # Test 2
+      - run: |
+          mkdir -p .changeset
+          touch .changeset/1.md
+      - id: test-2
+        uses: ./
+      - run: |
+          echo "${{ steps.test-2.outputs.has-changesets }}"
+          echo "${{ steps.test-2.outputs.changesets }}"
+      - if: steps.test-2.outputs.has-changesets != 'true'
+        run: exit 1
+      - if: contains(fromJson(steps.test-2.outputs.changesets), '1.md') == false
+        run: exit 1
+      - if: contains(fromJson(steps.test-2.outputs.changesets), '2.md')
+        run: exit 1
+
+      # Test 3
+      - run: |
+          touch .changeset/pre.json
+          echo '{"changesets": ["1"]}' > .changeset/pre.json
+      - id: test-3
+        uses: ./
+      - run: |
+          echo "${{ steps.test-3.outputs.has-changesets }}"
+          echo "${{ steps.test-3.outputs.changesets }}"
+      - if: steps.test-3.outputs.has-changesets == 'true'
+        run: exit 1
+
+      # Test 4
+      - run: |
+          touch .changeset/2.md
+      - id: test-4
+        uses: ./
+      - run: |
+          echo "${{ steps.test-4.outputs.has-changesets }}"
+          echo "${{ steps.test-4.outputs.changesets }}"
+      - if: steps.test-4.outputs.has-changesets != 'true'
+        run: exit 1
+      - if: contains(fromJson(steps.test-4.outputs.changesets), '2.md') == false
+        run: exit 1
