@@ -4,6 +4,7 @@
 if [ ! -d .changeset ]; then
   echo "has-changesets=false" >> "$GITHUB_OUTPUT"
   echo "changesets=[]" >> "$GITHUB_OUTPUT"
+  echo "test"
   exit 0
 fi
 
