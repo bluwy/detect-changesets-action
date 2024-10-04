@@ -1,6 +1,6 @@
 # Detect Changesets
 
-Detect whether they are changesets in the `.changeset` directory. It checks the `.changeset` directory for changeset `.md` files statically so `@changesets/cli` doesn't need to be installed. It also handles prerelease mode where `.md` files are always preserved, but will filter them out if they were already released.
+Detect whether there are changesets in the `.changeset` directory. It checks the `.changeset` directory for changeset `.md` files statically so `@changesets/cli` doesn't need to be installed. It also handles prerelease mode where `.md` files are always preserved, but will filter them out if they were already released (via `pre.json` file).
 
 ## Example
 
@@ -27,9 +27,19 @@ jobs:
           echo "Changesets detected!"
           echo "Changesets: ${{ steps.detect.outputs.changesets }}"
 
+        # Example output:
+        # Changesets detected!
+        # Changesets: [blue-boats-relax,dry-donuts-smile]
+
       - if: steps.detect.outputs.has-changesets == 'false'
         run: echo "No changesets detected!"
 ```
+
+> For `steps.detect.outputs.changesets`, you can use [`fromJSON`](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/evaluate-expressions-in-workflows-and-actions#fromjson) to parse the array if needed, for example:
+>
+> ```yaml
+> - if: contains(fromJSON(steps.detect.outputs.changesets), 'blue-boats-relax')
+> ```
 
 ## Sponsors
 
