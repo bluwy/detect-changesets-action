@@ -14,4 +14,4 @@ runs:
   steps:
     - name: Detect changesets
       shell: bash
-      run: index.sh
+      run: ${{ github.action_path }}/index.sh
