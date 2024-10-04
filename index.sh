@@ -2,8 +2,8 @@
 
 # If .changeset doesn't exist, do a fast path
 if [ ! -d .changeset ]; then
-  echo "has-changesets=false" >> $GITHUB_OUTPUT
-  echo "changesets=[]" >> $GITHUB_OUTPUT
+  echo "has-changesets=false" >> "$GITHUB_OUTPUT"
+  echo "changesets=[]" >> "$GITHUB_OUTPUT"
   exit 0
 fi
 
@@ -29,9 +29,9 @@ list_a=($(echo "${list_a[@]}" | tr ' ' '\n' | grep -v '^$'))
 
 # Check if list a still has any items
 if [ ${#list_a[@]} -eq 0 ]; then
-  echo "has-changesets=false" >> $GITHUB_OUTPUT
-  echo "changesets=[]" >> $GITHUB_OUTPUT
+  echo "has-changesets=false" >> "$GITHUB_OUTPUT"
+  echo "changesets=[]" >> "$GITHUB_OUTPUT"
 else
-  echo "has-changesets=true" >> $GITHUB_OUTPUT
-  echo "changesets=$(printf '%s\n' "${list_a[@]}" | jq -R . | jq -sc .)" >> $GITHUB_OUTPUT
+  echo "has-changesets=true" >> "$GITHUB_OUTPUT"
+  echo "changesets=$(printf '%s\n' "${list_a[@]}" | jq -R . | jq -sc .)" >> "$GITHUB_OUTPUT"
 fi
