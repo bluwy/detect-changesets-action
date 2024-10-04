@@ -19,7 +19,6 @@ jobs:
       # Checkout the repository to access the files
       - uses: actions/checkout@v4
 
-      # Run the action to synchronize the branches
       - uses: bluwy/detect-changesets-action@v1
         id: detect
 
