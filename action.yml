@@ -6,7 +6,7 @@ branding:
   color: blue
 outputs:
   has-changesets:
-    description: 'Whether there is any changesets'
+    description: 'Whether there are any changesets'
   changesets:
     description: 'A list of changesets'
 runs:
